@@ -1,0 +1,380 @@
+POST http://10.252.76.125:8081/order/receivingOrder?oid=2
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-15T111658.200.json
+
+###
+
+POST http://10.252.76.125:8081/order/deliverOrder?oid=2
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-15T111649.200.json
+
+###
+
+POST http://10.252.76.125:8081/order/receivingOrder?oid=2
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-15T111514.200.json
+
+###
+
+POST http://10.252.76.125:8081/order/deliverOrder?oid=2
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-15T111103.200.json
+
+###
+
+POST http://10.252.76.125:8081/captcha/image/check?checkCode=dzrg
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-15T082057.200.json
+
+###
+
+POST http://10.252.76.125:8081/captcha/image/check?checkCode=dzrg
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-15T082047.200.json
+
+###
+
+POST http://10.252.76.125:8081/captcha/image/check?checkCode=dzrg
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-15T052756.200.json
+
+###
+
+POST http://10.252.76.125:8081/image/check?checkCode=dzrg
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-15T052745.404.html
+
+###
+
+POST http://10.252.76.125:8081/captcha/image?oid=100
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-15T052557.200.txt
+
+###
+
+POST http://10.252.76.125:8081/order/cancelOrderByOid?oid=100
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-08T115247.200.json
+
+###
+
+GET http://10.252.76.125:8081/order?bookID=1001
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-08T115213.404.html
+
+###
+
+POST http://10.252.73.165:8080/user/register?username=1001&usasdas=asdasda
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST http://10.252.73.165:8080/user/register?username=1001&usasdas=asdasda
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST http://10.252.73.165:8080/user/register?username=1001&usasdas=asdasda
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST http://10.252.75.62:8080/user/login?username=1001&usasdas=asdasda
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST http://10.252.75.62:8080/user/login?username=1001&usasdas=asdasda
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST http://10.252.75.62:8080/user/login?username=123&userpassw=123456
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET http://10.252.75.62:8080/book/detail?bookID=1001
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-03T101355.200.json
+
+###
+
+POST http://10.252.75.62:8080/user/login?username=123&userpassw=123456
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST http://10.252.75.62:8080/user/login?username=123&userpassw=123456
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST http://10.252.75.62:8080/user/login?username=123&userpassw=123456
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST http://10.252.75.62/user/login?username=123&userpassw=123456
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-03T101056.404.html
+
+###
+
+POST http://10.252.75.62/user/login?username=123&userpassw=123456
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET http://10.252.76.246:8081/cart/getCarts?uid=tbFjz
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-03T072314.200.json
+
+###
+
+GET http://10.252.76.246:8081/cart/getCarts?uid=
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-03T072237.200.json
+
+###
+
+GET http://10.252.76.246:8081/cart/getCarts?uid=123
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-03T072157.200.json
+
+###
+
+GET http://10.252.76.246:8081/cart/getCarts
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-03T071945.200.json
+
+###
+
+GET http://10.252.76.246:8081/cart/getCarts?uid=sdjasd
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-03T071940.200.json
+
+###
+
+GET http://10.252.76.246:8081/cart/getCarts?uid=2
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-03T071856.200.json
+
+###
+
+GET http://10.252.76.246:8081/cart/deleteCart?cid=2
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-03T051223.200.json
+
+###
+
+GET http://10.252.76.246:8081/cart/deleteCart?cid=12
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-03T051114.200.json
+
+###
+
+GET http://10.252.76.246:8081/cart/updateCart?cid=12&num=4
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-03T051018.200.json
+
+###
+
+GET http://10.252.76.246:8081/cart/updateCart?cid=1&num=4
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-03T050947.200.json
+
+###
+
+POST http://10.252.76.246:8081/cart/addCart?uid=tbFjz&pid=tbtestid777
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-03T044900.200.json
+
+###
+
+POST http://10.252.76.246:8081/cart/addCart?uid=tbFjz&pid=tbtestid2
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-03T043949.200.json
+
+###
+
+POST http://10.252.76.246:8081/cart/addCart?uid=tbFjz&pid=tbtestid1
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-03T043750.200.json
+
+###
+
+POST http://10.252.76.246:8081/cart/addCart?uid=123456&pid=tbtestid1
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-03T043214.200.json
+
+###
+
+POST http://10.252.76.246:8081/cart/addCart?uid=tbFjz&pid=tbtestid1
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-03T041159.200.json
+
+###
+
+GET http://10.252.76.246:8081/product/list?pageNum=1&pageSize=10
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-03T091625.200.json
+
+###
+
+GET http://10.252.76.246:8081/product/updateProduct?pid=tbtestid46&imgM=test3_m.jpg&imgS=test3_s.jpg&saleNum=35
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-02T110144.200.json
+
+###
+
+GET http://10.252.76.246:8081/product/updateProduct?pid=tbtestid3&imgM=test3_m.jpg&imgS=test3_s.jpg&saleNum=35
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-02T105616.200.json
+
+###
+
+GET http://10.252.76.246:8081/product/updateProduct?pid=tbtestid3&imgM=test3_m.jpg&imgS=test3_s.jpg&price=78
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-02T105554.200.json
+
+###
+
+GET http://10.252.76.246:8081/product/updateProduct?pid=tbtestid3&imgM=test3_m.jpg&imgS=test3_s.jpg&price=78
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-02T105055.200.json
+
+###
+
+GET http://10.252.76.246:8081/product/updateProduct?pid=tbtestid3&imgM=test3_m.jpg&imgS=test3_s.jpg&price=78&saleNum=46
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-02T105041.200.json
+
+###
+
+GET http://10.252.76.246:8081/product/updateProduct?pid=tbtestid3&imgB=test4_b.jpg&imgM=test3_m.jpg&imgS=test3_s.jpg
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-02T104833.200.json
+
+###
+
+GET http://10.252.76.246:8081/product/updateProduct?pid=tbtestid3&saleNum=46&imgB=test3_b.jpg&imgM=test3_m.jpg&imgS=test3_s.jpg
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-02T104819.200.json
+
+###
+
+GET http://10.252.76.246:8081/product/updateProduct?pid=tbtestid3&description=我是一个测试用例3453.。&saleNum=32&imgB=test3_b.jpg&imgM=test3_m.jpg&imgS=test3_s.jpg
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-02T104807.200.json
+
+###
+
+GET http://10.252.76.246:8081/product/updateProduct?pid=tbtestid3&pclass=tb测试分类5&price=78&description=我是一个测试用例333.。&saleNum=32&imgB=test3_b.jpg&imgM=test3_m.jpg&imgS=test3_s.jpg
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-02T104636.200.json
+
+###
+
+GET http://10.252.76.246:8081/product/updateProduct?pid=tbtestid3&pname=tb测试名字6&pclass=tb测试分类3&price=78&description=我是一个测试用例333.。&saleNum=32&imgB=test3_b.jpg&imgM=test3_m.jpg&imgS=test3_s.jpg
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-02T104622.200.json
+
+###
+
+GET http://10.252.76.246:8081/product/updateProduct?pid=tbtestid3&pname=tb测试名字6&pclass=tb测试分类3&price=78&description=我是一个测试用例333.。&saleNum=32&imgB=test3_b.jpg&imgM=test3_m.jpg&imgS=test3_s.jpg
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-12-02T104458.500.html
+
+###
+

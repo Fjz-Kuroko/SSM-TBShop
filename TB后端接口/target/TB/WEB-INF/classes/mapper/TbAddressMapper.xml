@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：该mapper.xml映射文件的唯一标识 -->
+<mapper namespace="com.tb.dao.TbAddressDao">
+
+    <select id="selectAllAddressByUid" parameterType="String" resultType="TbAddress">
+        select * from tb_address where uid = #{uid}
+    </select>
+
+    <select id="selectAddressByAid" parameterType="Integer" resultType="TbAddress">
+        select * from tb_address where aid = #{aid}
+    </select>
+    
+    <insert id="addAddress" parameterType="TbAddress">
+        insert into tb_address (uid, address, recipient, recipient_phone) values (#{uid}, #{address}, #{recipient}, #{recipientPhone})
+    </insert>
+
+    <delete id="deleteAddressByAid" parameterType="Integer">
+        delete from tb_address where aid = #{aid}
+    </delete>
+
+    <update id="updateAddressByAid" parameterType="TbAddress">
+        update tb_address
+        <set>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <if test="recipient != null">
+                recipient = #{recipient},
+            </if>
+            <if test="recipientPhone != null">
+                recipient_phone = #{recipientPhone},
+            </if>
+        </set>
+        where aid = #{aid};
+    </update>
+
+</mapper>

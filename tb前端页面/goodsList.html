@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--    导入boot四个文件，导入顺序固定-->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/goodList.css">
+    <link rel="stylesheet" href="css/head.css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- Qs库，处理axios的post请求带参数问题 -->
+    <script src="https://cdn.bootcss.com/qs/6.7.0/qs.min.js"></script>
+    <script src="js/public.js"></script>
+    <script>
+        //单个商品组件
+        Vue.component('good-item', {
+            props: ['good'],
+            methods: {
+                //点击商品，跳转到商品详情
+                goToDetail (pid) {
+                    window.location.href = 'goodDetail.html?pid=' + pid;
+                },
+            },
+            template: '        <div class="col-lg-3 col-md-6 text-center">\
+            <div class="good-item-outline">\
+                <div class="good-item-content" >\
+                    <div>\
+                        <!--                商品图片-->\
+                        <img class="good-item-img" :src="good.imgS" alt="" @click="goToDetail(good.pid)">\
+                    </div>\
+                        <!--                商品价格-->\
+                    <div class="good-item-price">\
+                        <span class="font-weight-bold" @click="goToDetail(good.pid)">￥{{good.price}}</span>\
+                    </div>\
+                        <!--                商品名称-->\
+                    <div class="good-item-name">\
+                        <span style="font-size: 22px" @click="goToDetail(good.pid)">{{good.pname}}</span>\
+                    </div>\
+                    <div class="good-item-description" >\
+                        <span @click="goToDetail(good.pid)">{{good.description}}</span>\
+                    </div>\
+                </div>\
+            </div>\
+        </div>\
+            '
+        })
+
+
+
+    </script>
+</head>
+<body>
+<div id="app">
+<!--引入头部
+    传参太复杂，直接在这里写html，不通过iframe引入
+    这里是头部
+    -->
+    <div id="head">
+        <!--顶部小灰条-->
+        <div class="bg_gray">
+            <div class="container clearfix">
+                <div class="w-100 hh2">
+                    <div class="row h-100 p-0">
+                        <div class="col-6 mt-auto mb-auto my_small text-left">
+                            <span class="mt-1 ml-3" style="color: #4e555b">欢迎光临tb网 &nbsp;</span>
+                            <a v-if="haveLogin==1" @click="quitLogin()" class="f1">退出</a>
+                            <a v-else @click="jumpForward('login.html')" class="f1">登陆</a>
+                            &nbsp;|&nbsp;
+                            <a @click="jumpForward('register.html')" class="f1">注册</a>
+                        </div>
+                        <div class="col-6 mt-auto mb-auto text-right">
+                            <a class="f1" @click="jumpForward('adminLogin.html')">
+                                后台登陆
+                            </a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a class="f1" @click="jumpForward('personCenter.html')">
+                                <img src="img/icon/user.png" alt="">
+                                个人中心
+                            </a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a class="f1 mr-3" @click="jumpForward('Cart.html')">
+                                <img src="img/icon/shop_car.png" alt="">
+                                购物车
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--搜索栏-->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-12">
+                    <a class="hoverpointer" @click="jumpForward('index.html')"><img src="img/test/logo.png" width="240px"
+                                                                                    height="104px" alt=""></a>
+                </div>
+                <div class="col-lg-5 col-md-12">
+                    <div class="input-group mt-4 mb-4">
+                        <input type="text" v-model="param.pname" class="form-control " placeholder="请输入关键字">
+                        <button class="border-0" @click="getProList()">
+                            <img src="img/test/search.png" alt="">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--导航栏-->
+        <div class="jumbotron rounded-0" style="background-color: #000000">
+            <div class="container">
+                <ul class="nav nav-pills nav-fill justify-content-center">
+                    <li class="nav-item"><a @click="jumpForward('index.html')" class="nav-link rounded-0"><span class="f_bar">首页</span></a></li>
+                    <li class="nav-item"><a @click="jumpForward('goodsList.html')" class="nav-link rounded-0"><span class="f_bar">优品上新</span></a></li>
+                    <li class="nav-item"><a @click="jumpForward('goodsList.html')" class="nav-link rounded-0"><span class="f_bar">传颂经典</span></a></li>
+                    <li class="nav-item"><a @click="jumpForward('goodsList.html')" class="nav-link rounded-0"><span class="f_bar">限时折扣</span></a></li>
+                    <li class="nav-item"><a @click="jumpForward('goodsList.html')" class="nav-link rounded-0"><span class="f_bar">紧俏靓货</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+    <!--    二次检索栏-->
+    <div class="border mt-4 ">
+        <div class="row no-gutters">
+            <!--                    排序方式-->
+            <div class="col-lg-2">
+                <div class="dropdown ml-1">
+                    <template>
+                        <el-select v-model="param.sortord" placeholder="排序方式"
+                                   style="width: 110px; margin-left: 0.75rem" >
+                            <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </template>
+                </div>
+            </div>
+<!--            价格区间-->
+            <div class="col-lg-8 form-inline">
+                <span class="ml-3">价格区间:&nbsp;</span>
+                <input class="form-control pl-1 rounded-0" v-model="param.minprice" type="text"  placeholder="￥">
+                ~
+                <input class="form-control pl-1 rounded-0" v-model="param.maxprice" type="text"  placeholder="￥">
+                &nbsp;
+                <input class="btn btn-primary pt-1 pb-1 ml-3 rounded-0" type="submit" value="查询" @click="getProList">
+            </div>
+
+        </div>
+    </div>
+
+    <!--    商品区域-->
+    <div class="row mt-4 no-gutters">
+                <good-item
+                        v-for="good in goods"
+                        v-bind:key="good.id"
+                        v-bind:good="good">
+                </good-item>
+
+
+        <!--        分页模块-->
+        <div class="w-100" name="for_hr"></div>
+        <div class="text-center w-100">
+            <div class="block">
+                <el-pagination
+                        @current-change="getCurrentPage"
+                        background
+                        :current-page.sync="param.current_page"
+                        :page-size="param.pageSize"
+                        layout="prev, pager, next"
+                        :total="total">
+                </el-pagination>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+</body>
+<script>
+    // 引入自定义baseUrl
+    var baseUrl = getBaseUrl();
+    // 意思是携带cookie信息,保持session的一致性
+    axios.defaults.withCredentials = true;
+    // 引入QS库
+    var qs = Qs;
+    //组件测试，此处为数据
+    var app = new Vue({
+        el: '#app',
+        data: {
+            haveLogin: 0,
+            total: 120,
+            options:[{
+                    value: 'asc',
+                    label: '价格升序'
+                }, {
+                    value: 'desc',
+                    label: '价格降序'
+                }
+            ],
+            goods:[],
+            param:{
+                pname:'',
+                pageSize: 12,
+                current_page:1,
+                minprice:'',
+                maxprice:'',
+                sortord:'',
+            }
+        },
+        created:function(){
+            this.getUrlParam();
+            this.getProList();
+        },
+        methods: {
+            quitLogin(){
+                // sessionStorage.removeItem('uid');
+                document.cookie = "uid=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                location.reload();
+            },
+            jumpForward(url) {
+                top.location.href = url;
+            },
+            //跳转过来时，接收url里的pname参数
+            getUrlParam () {
+                var url = decodeURI(window.location.href);
+                var urlPname = url.split("?pname=")[1];
+                this.param.pname = urlPname;
+            },
+            // 应该是current-page变的时候就会传参，总之写个参数就能接到current-page
+            getCurrentPage: function () {
+                this.getProList();
+            },
+            getProList: function (){
+                var that = this;
+                // console.log('getProlist1次');
+                // console.log(that.param);
+                axios({
+                    method:'get',
+                    url: baseUrl + '/product/prodlist',
+                    transformRequest: [
+                        function (data) {
+                            return qs.stringify(data);
+                        }
+                    ],
+                    params: {
+                            pname: that.param.pname,
+                            minPrice:that.param.minprice,
+                            maxPrice:that.param.maxprice,
+                            sortord:that.param.sortord,
+                            pageNum:that.param.current_page,
+                            pageSize:that.param.pageSize,
+                    }
+                }).then(function(response) {
+                        that.goods = response.data.data.list;
+                        that.total = response.data.data.total
+                        // console.log(response);
+                    }, function (err) {
+                        console.log(err);
+                    })
+            }
+        }
+    })
+
+
+
+
+
+    // pdata.getProList();
+</script>
+
+<!--引入底部bottom.html-->
+<footer>
+    <iframe src="public/foot.html" scrolling="no" class="my_footer"></iframe>
+</footer>
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：该mapper.xml映射文件的唯一标识 -->
+<mapper namespace="com.tb.dao.TbCartDao">
+    <!-- 根据cid查询 -->
+    <select id="selectCartByCid" parameterType="Integer" resultType="TbCart">
+        select * from tb_cart where cid = #{cid}
+    </select>
+    <!-- 根据用户id和商品id查询 -->
+    <select id="selectCartByUidAndPid" parameterType="TbCart" resultType="TbCart">
+        select * from tb_cart where uid = #{uid} and pid = #{pid}
+    </select>
+    <!-- 增加 -->
+    <insert id="addCart" parameterType="TbCart">
+        insert into tb_cart (uid, pid, num) values (#{uid}, #{pid}, #{num})
+    </insert>
+    <!-- 更新购物车商品数量 -->
+    <update id="updateCart" parameterType="TbCart">
+        update tb_cart set num = #{num} where cid = #{cid}
+    </update>
+    <!-- 根据cid删除 -->
+    <delete id="deleteCart" parameterType="Integer">
+        delete from tb_cart where cid = #{cid}
+    </delete>
+    <!-- 根据用户id查询所有的购物车记录 -->
+    <select id="selectCartsByUid" parameterType="String" resultType="com.tb.vo.ViewCart">
+        select c.*, p.pname, p.price, p.img_s
+        from tb_cart c, tb_product p
+        where c.pid = p.pid and c.uid = #{uid}
+    </select>
+    <!-- 根据用户id删除对应的所有购物车记录 -->
+    <delete id="clearCart" parameterType="String">
+        delete from tb_cart where uid = #{uid}
+    </delete>
+    <!-- 批量删除 -->
+    <delete id="batchDelete" parameterType="java.util.Map">
+        delete from tb_cart where cid in (${cartIds})
+    </delete>
+</mapper>

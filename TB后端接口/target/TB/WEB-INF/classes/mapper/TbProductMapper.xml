@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：该mapper.xml映射文件的唯一标识 -->
+<mapper namespace="com.tb.dao.TbProductDao">
+    <!-- 查找所有商品 -->
+    <select id="selectAllProducts" resultType="TbProduct">
+        select * from tb_product
+    </select>
+    <!-- 根据商品id查找商品 -->
+    <select id="selectProductByPid" resultType="TbProduct" parameterType="String">
+        select * from tb_product where pid = #{pid}
+    </select>
+    <!-- 根据条件查找商品商品 -->
+    <select id="prodlist" resultType="TbProduct" parameterType="map">
+        select * from tb_product where (price between #{minPrice} and #{maxPrice})
+        <if test="pname!=null and pname!=''">
+            and pname like concat('%', #{pname}, '%')
+        </if>
+        <if test="sortord != null and sortord =='asc'">
+            order by price
+        </if>
+        <if test="sortord != null and sortord == 'desc'">
+            order by price desc
+        </if>
+    </select>
+    <!-- 增加商品 -->
+    <insert id="addProduct" parameterType="TbProduct">
+        insert into tb_product (pid, pname, pclass, price, description, sale_num, img_b, img_m, img_s)
+        values (#{pid}, #{pname}, #{pclass}, #{price}, #{description}, #{saleNum}, #{imgB}, #{imgM}, #{imgS})
+    </insert>
+    <!-- 根据商品id删除商品 -->
+    <delete id="deleteProduct" parameterType="String">
+        delete from tb_product where pid = #{pid}
+    </delete>
+    <!-- 更新商品数据 -->
+    <update id="updateProduct" parameterType="TbProduct">
+        update tb_product
+        <set>
+            <if test="pname != null">
+                pname = #{pname},
+            </if>
+            <if test="pclass != null">
+                pclass = #{pclass},
+            </if>
+            <if test="price != null and '' != price">
+                price = #{price},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="saleNum != null and '' != saleNum">
+                sale_num = #{saleNum},
+            </if>
+            <if test="imgB != null">
+                img_b = #{imgB},
+            </if>
+            <if test="imgM != null">
+                img_m = #{imgM},
+            </if>
+            <if test="imgS != null">
+                img_s = #{imgS},
+            </if>
+        </set>
+        where pid = #{pid};
+    </update>
+</mapper>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>填写订单</title>
+		<!--  导入Bootstrap四个文件，导入的顺序固定  -->
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<script src="js/jquery.min.js"></script>
+		<script src="js/popper.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<!-- 引入element-ui样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<style>
+			.address .el-table tbody tr:hover > td{
+				background-color: #ddd !important;
+			}
+			.my_pure_muted{
+				color: #6c757d !important;
+			}
+			.myorder .el-table tbody tr:hover > td {
+				background-color: white !important;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app" class="container">
+			<div class="address">
+				<template>
+					<el-table ref="singleTable" :data="addresses" highlight-current-row :header-cell-style="{background:'#0094ff',color:'#fff'}"
+					 @current-change="handleCurrentChange" empty-text="地址栏空空如也~" style="width: 100%">
+						<el-table-column type="index" width="50">
+						</el-table-column>
+						<el-table-column property="recipient" label="收货人" width="120">
+						</el-table-column>
+						<el-table-column property="recipientPhone" label="收货人电话" width="120">
+						</el-table-column>
+						<el-table-column property="address" label="地址">
+						</el-table-column>
+					</el-table>
+					<div style="margin-top: 20px; margin-bottom: 10px;">
+						<el-button type="danger" plain @click="cancelOrder()">取消订单</el-button>
+						<el-button @click="toAddress()">管理地址</el-button>
+					</div>
+				</template>
+			</div>
+			<div class="myorder">
+				<template>
+					<el-table :data="shoplist" style="width: 100%; font-size: 14px;" size="mini" border :show-header="false" :span-method="arraySpanMethod">
+						<el-table-column prop="img" label="图片" align="center" width="120">
+							<template slot-scope="scope">
+								<el-image style="width: 80px; height: 80px" :src="scope.row.imgS" fit="fit"></el-image>
+							</template>
+						</el-table-column>
+						<el-table-column prop="pname" label="商品名称" align="center">
+						</el-table-column>
+						<el-table-column prop="price" label="价格" align="center" width="80">
+							<template slot-scope="scope">
+								<span class="my_pure_muted">￥{{scope.row.price}}</span>
+							</template>
+						</el-table-column>
+						<el-table-column prop="pnum" label="数量" align="center" width="80">
+						</el-table-column>
+						<el-table-column prop="sum" label="总价" align="center" width="80">
+							<template slot-scope="scope">
+								<span class="my_pure_muted">￥{{myOrder.orderAmount}}</span>
+							</template>
+						</el-table-column>
+						<el-table-column prop="status" label="订单状态" align="center" width="80">
+							<template slot-scope="scope">
+								<span class="my_pure_muted">{{myOrder.status}}</span>
+							</template>
+						</el-table-column>
+					</el-table>
+					<div style="margin-top: 20px; float: right;">
+						<el-button @click="submitOrder()" type="primary">确认付款</el-button>
+					</div>
+				</template>
+			</div>
+		</div>
+	</body>
+	<!-- 引入开发版本Vue -->
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<!-- 引入element-ui组件库 -->
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<!-- 官网提供的 axios 在线地址 -->
+	<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.0/axios.min.js"></script>
+	<!-- Qs库，处理axios的post请求带参数问题 -->
+	<script src="https://cdn.bootcss.com/qs/6.7.0/qs.min.js"></script>
+	<script src="js/public.js"></script>
+	<script src="js/fillOrder.js"></script>
+</html>

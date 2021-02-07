@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <!--    导入boot四个文件，导入顺序固定-->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/public.js"></script>
+</head>
+
+<body>
+<!--引入头部foot.html-->
+<header>
+    <iframe class="my_header" src="public/head.html" scrolling="no"></iframe>
+</header>
+
+<!--中间内容-->
+<div id="app">
+
+    <!--轮播 mt:740px-->
+    <div class="jumbotron">
+        <!--轮播图片-->
+        <div class="carousel slide" data-ride="carousel" id="demo">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="img/index_1.jpg" class="img-fluid" alt="" >
+                </div>
+                <div class="carousel-item">
+                    <img src="img/index_2.jpg" class="img-fluid" alt="" >
+                </div>
+                <div class="carousel-item">
+                    <img src="img/index_3.jpg" class="img-fluid" alt="">
+                </div>
+            </div>
+            <!--左右箭头-->
+            <a href="#demo" data-slide="prev" class="carousel-control-prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a href="#demo" data-slide="next" class="carousel-control-next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+            <!--轮播指示符-->
+            <ul class="carousel-indicators">
+                <li class="active" data-slide-to="0" data-target="#demo"></li>
+                <li data-slide-to="1" data-target="#demo"></li>
+                <li data-slide-to="2" data-target="#demo"></li>
+            </ul>
+        </div>
+    </div>
+
+    <!--主卡片-->
+    <div class="jumbotron rounded-0">
+        <div class="container">
+            <div class="rounded w-100 ">
+                <div class="row no-gutters">
+                    <div class="col-lg-4 col-md-12 mt-4 mb-4 pl-4">
+                        <a @click="jumpForward('goodsList.html?pname=赛博朋克')">
+                            <figure class="overlay-figure text-center">
+                                <div class="overlay-figure-content shadow">
+                                    <img class="img-fluid rounded " src="img/styleCard1.jpg">
+                                    <div class="overlay-figure-background"></div>
+                                </div>
+                                <figcaption class="overlay-figure-caption">
+                                    <div class="contents">
+                                        <div class="contents-stack">
+                                            <h2 class="title">赛博朋克</h2>
+                                        </div>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-12 mt-4 mb-4 pl-4">
+                        <a @click="jumpForward('goodsList.html?pname=极简风格')">
+                            <figure class="overlay-figure text-center">
+                                <div class="overlay-figure-content shadow">
+                                    <img class="img-fluid rounded" src="img/styleCard2.jpg">
+                                    <div class="overlay-figure-background"></div>
+                                </div>
+                                <figcaption class="overlay-figure-caption">
+                                    <div class="contents">
+                                        <div class="contents-stack">
+                                            <h2 class="title">极简风格</h2>
+                                        </div>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-12 mt-4 mb-4 pl-4">
+                        <a @click="jumpForward('goodsList.html?pname=波普艺术')">
+                            <figure class="overlay-figure text-center">
+                                <div class="overlay-figure-content shadow">
+                                    <img class="img-fluid rounded" src="img/styleCard3.jpg">
+                                    <div class="overlay-figure-background"></div>
+                                </div>
+                                <figcaption class="overlay-figure-caption">
+                                    <div class="contents">
+                                        <div class="contents-stack">
+                                            <h2 class="title">波普艺术</h2>
+                                        </div>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--分割区块-->
+    <div class="container mt-5 mb-4">
+        <h1 class="text-center">衣柜敞开</h1>
+    </div>
+
+    <!--次卡片-->
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-lg-6 col-md-12">
+                <ul class="list-group ">
+                    <li class="list-group-item" @click="goToGoodsList('女上衣')">
+                        <figure class="overlay-figure text-center">
+                            <div class="overlay-figure-content shadow-sm">
+                                <img class="img-fluid rounded " src="img/test/main_card1_1.png">
+                                <div class="overlay-figure-background"></div>
+                            </div>
+                            <figcaption class="overlay-figure-caption">
+                                <div class="contents">
+                                    <div class="contents-stack">
+                                        <h2 class="title">上衣</h2>
+                                    </div>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    <li class="list-group-item" @click="goToGoodsList('女下装')">
+                        <figure class="overlay-figure text-center">
+                            <div class="overlay-figure-content shadow-sm">
+                                <img class="img-fluid rounded " src="img/test/main_card1_2.png">
+                                <div class="overlay-figure-background"></div>
+                            </div>
+                            <figcaption class="overlay-figure-caption">
+                                <div class="contents">
+                                    <div class="contents-stack">
+                                        <h2 class="title">下装</h2>
+                                    </div>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    <li class="list-group-item" @click="goToGoodsList('女鞋子')">
+                        <figure class="overlay-figure text-center">
+                            <div class="overlay-figure-content shadow-sm">
+                                <img class="img-fluid rounded " src="img/test/main_card1_3.png">
+                                <div class="overlay-figure-background"></div>
+                            </div>
+                            <figcaption class="overlay-figure-caption">
+                                <div class="contents">
+                                    <div class="contents-stack">
+                                        <h2 class="title">鞋子</h2>
+                                    </div>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <ul class="list-group">
+                    <li class="list-group-item" @click="goToGoodsList('男上衣')">
+                        <figure class="overlay-figure text-center">
+                            <div class="overlay-figure-content shadow-sm">
+                                <img class="img-fluid rounded " src="img/test/main_card2_1.png">
+                                <div class="overlay-figure-background"></div>
+                            </div>
+                            <figcaption class="overlay-figure-caption">
+                                <div class="contents">
+                                    <div class="contents-stack">
+                                        <h2 class="title">上衣</h2>
+                                    </div>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    <li class="list-group-item" @click="goToGoodsList('男下装')">
+                        <figure class="overlay-figure text-center">
+                            <div class="overlay-figure-content shadow-sm">
+                                <img class="img-fluid rounded " src="img/test/main_card2_2.png">
+                                <div class="overlay-figure-background"></div>
+                            </div>
+                            <figcaption class="overlay-figure-caption">
+                                <div class="contents">
+                                    <div class="contents-stack">
+                                        <h2 class="title">下装</h2>
+                                    </div>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    <li class="list-group-item" @click="goToGoodsList('男鞋子')">
+                        <figure class="overlay-figure text-center">
+                            <div class="overlay-figure-content shadow-sm">
+                                <img class="img-fluid rounded " src="img/test/main_card2_3.png">
+                                <div class="overlay-figure-background"></div>
+                            </div>
+                            <figcaption class="overlay-figure-caption">
+                                <div class="contents">
+                                    <div class="contents-stack">
+                                        <h2 class="title">鞋子</h2>
+                                    </div>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--引入底部bottom.html-->
+<footer>
+    <iframe src="public/foot.html" scrolling="no" class="my_footer"></iframe>
+</footer>
+</body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        methods: {
+            goToGoodsList(pname) {
+                top.location.href = 'goodsList.html?pname=' + pname;
+            },
+            jumpForward(url) {
+                top.location.href = url;
+            },
+        }
+    })
+</script>
+</html>

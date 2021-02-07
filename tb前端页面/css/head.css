@@ -1,0 +1,93 @@
+
+.f1{
+    font-size: 0.8rem;
+    color: #6c757d !important;
+}
+
+.f1:hover{
+    text-decoration: none;
+    cursor: pointer;
+    color: red !important;
+}
+
+.hoverpointer{
+}
+
+.hoverpointer:hover{
+    cursor: pointer;
+}
+
+.ver_center{
+    margin: 0 auto;
+}
+/*鼠标悬停不会有下划线*/
+
+
+.hh2{
+    height: 2rem;
+}
+
+
+.my_small{
+    font-size: 0.8rem;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "|";
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+
+.bg_gray{
+    background-color: #f5f5f5;
+}
+
+.list-group-item {
+    border: 0px;
+}
+.rounded-50{
+    border-radius: 0.5rem !important;
+}
+
+.rounded-75{
+    border-radius: 0.75rem !important;
+}
+
+.rounded-xl {
+    border-radius: 1rem !important;
+}
+
+/*修改jumbotron*/
+.jumbotron {
+    padding: 0rem 0rem;
+    margin-bottom: 0rem;
+    background-color: #e9ecef;
+    border-radius: 0.3rem;
+}
+
+.bg_theme{
+    background-color: #a4b0be;
+}
+/*html{*/
+/*    font-family:sans-serif*/
+/*}*/
+
+.nav-pills .nav-link:hover{
+    background-color: red !important;
+    color: black;
+    cursor: pointer;
+}
+.nav-link .active{
+    background-color: #cf1322;
+}
+
+.nav-link{
+    color: black;
+}
+
+.f_bar{
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+}

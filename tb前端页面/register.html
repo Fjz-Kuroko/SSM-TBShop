@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>注册</title>
+	<link rel="stylesheet" href="css/login.css">
+	<!--  导入Bootstrap四个文件，导入的顺序固定  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<!-- 引入element-ui样式 -->
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+<div class="container" id="app">
+	<div class="login-box">
+		<el-form
+		  :rules="rules"
+		  ref="form"
+		  :model="form"
+		  label-width="80px"
+		  class="login-form"
+		>
+			<h2 class="login-title">欢迎注册</h2>
+			<el-form-item label="用户ID" prop="id">
+				<el-input v-model="form.id" placeholder="请输入用户ID"></el-input>
+			</el-form-item>
+			<el-form-item label="用户名" prop="name">
+				<el-input v-model="form.name" placeholder="请输入用户名"></el-input>
+			</el-form-item>
+			<el-form-item label="密 码" prop="password">
+				<el-input show-password type="password" v-model="form.password" placeholder="请输入密码"></el-input>
+			</el-form-item>
+			<el-form-item label="手 机" prop="phone">
+				<el-input v-model="form.phone" placeholder="请输入手机号码"></el-input>
+			</el-form-item>
+			<el-form-item label="性 别">
+				<el-radio-group v-model="form.gender" size="medium">
+				  <el-radio border label="男"></el-radio>
+				  <el-radio border label="女"></el-radio>
+				</el-radio-group>
+			</el-form-item>
+			<!-- <el-form-item label="验证码" prop="captchaCode">
+				<el-input v-model="form.captchaCode" placeholder="请输入验证码"></el-input>
+			</el-form-item>
+			<el-form-item>
+				<img width="90" height="37" :src="captchaSrc" alt="验证码" @click="getCaptcha()" style="cursor: pointer;"/>
+			</el-form-item> -->
+			<el-form-item>
+				<el-button type="primary" @click="onSubmit('form')">注册</el-button>
+				<el-button @click="toHome()">回首页</el-button>
+				<el-link type="primary" :underline="false" href="login.html">已有账号？去登录</el-link>
+			</el-form-item>
+		</el-form>
+	</div>
+</div>
+<!-- 引入开发版本Vue -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- 引入element-ui组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<!-- 官网提供的 axios 在线地址 -->
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.0/axios.min.js"></script>
+<!-- Qs库，处理axios的post请求带参数问题 -->
+<script src="https://cdn.bootcss.com/qs/6.7.0/qs.min.js"></script>
+<script src="js/public.js"></script>
+<script src="js/register.js"></script>
+</body>
+</html>

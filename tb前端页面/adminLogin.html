@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>后台登录</title>
+	<link rel="stylesheet" href="assets/css/login.css">
+	<!--  导入Bootstrap四个文件，导入的顺序固定  -->
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+	<!-- 引入element-ui样式 -->
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+<div class="container" id="app">
+	<div class="login-box">
+		<el-form
+		  :rules="rules"
+		  ref="form"
+		  :model="form"
+		  label-width="80px"
+		  class="login-form"
+		>
+			<h2 class="login-title">欢迎登录后台</h2>
+			<el-form-item label="用户名" prop="name">
+				<el-input v-model="form.name" placeholder="请输入用户ID"></el-input>
+			</el-form-item>
+			<el-form-item label="密 码" prop="password">
+				<el-input show-password type="password" v-model="form.password" placeholder="请输入密码"></el-input>
+			</el-form-item>
+			<el-form-item>
+				<el-button type="primary" @click="onSubmit('form')">登录</el-button>
+			</el-form-item>
+		</el-form>
+	</div>
+</div>
+</body>
+<!-- 引入开发版本Vue -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- 引入element-ui组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<!--官网提供的axios在线地址-->
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.0/axios.min.js"></script>
+<!-- Qs库，处理axios的post请求带参数问题 -->
+<script src="https://cdn.bootcss.com/qs/6.7.0/qs.min.js"></script>
+<script src="assets/js/public.js"></script>
+<script src="assets/js/adminLogin.js"></script>
+</html>

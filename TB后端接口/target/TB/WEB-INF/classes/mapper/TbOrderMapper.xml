@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：该mapper.xml映射文件的唯一标识 -->
+<mapper namespace="com.tb.dao.TbOrderDao">
+    <!-- 购物车提交订单 -->
+    <insert id="addOrder" parameterType="TbOrder" keyProperty="oid" useGeneratedKeys="true">
+        insert into tb_order (oid, uid, aid, order_time, order_amount, status, delivery_time, receiving_time)
+            values (null, #{uid}, -1, #{orderTime}, #{orderAmount}, #{status}, null, null);
+    </insert>
+    <!-- 根据订单id查询订单 -->
+    <select id="selectOrderByOid" parameterType="Integer" resultType="TbOrder">
+        select * from tb_order where oid = #{oid}
+    </select>
+    <!-- 订单付款 -->
+    <update id="payOrder" parameterType="TbOrder">
+        update tb_order set aid = #{aid}, status = #{status}, order_time = #{orderTime} where oid = #{oid}
+    </update>
+    <!-- 根据用户id查询所有的订单 -->
+    <resultMap id="ordersAndShoplists" type="com.tb.vo.ViewOrder">
+        <!-- property指向pojo对象中字段名 column指向数据库列名 -->
+        <id property="oid" column="oid" />
+        <result property="uid" column="uid" />
+        <result property="aid" column="aid" />
+        <result property="orderTime" column="order_time" />
+        <result property="orderAmount" column="order_amount" />
+        <result property="status" column="status" />
+        <result property="deliveryTime" column="delivery_time" />
+        <result property="receivingTime" column="receiving_time" />
+        <collection property="shoplists" ofType="com.tb.vo.ViewShoplist" column="oid"
+                    select="com.tb.dao.TbShoplistDao.getShoplistByOid" />
+    </resultMap>
+    <select id="selectAllOrderByUid" parameterType="String" resultMap="ordersAndShoplists">
+        select * from tb_order where uid = #{uid}
+    </select>
+
+    <resultMap id="adminOrder" type="com.tb.vo.ViewAdminOrder">
+        <!-- property指向pojo对象中字段名 column指向数据库列名 -->
+        <id property="oid" column="oid" />
+        <result property="uid" column="uid" />
+        <result property="aid" column="aid" />
+        <result property="address" column="address" />
+        <result property="recipient" column="recipient" />
+        <result property="recipientPhone" column="recipient_phone" />
+        <result property="orderTime" column="order_time" />
+        <result property="orderAmount" column="order_amount" />
+        <result property="status" column="status" />
+        <result property="deliveryTime" column="delivery_time" />
+        <result property="receivingTime" column="receiving_time" />
+        <collection property="shoplists" ofType="com.tb.vo.ViewShoplist" column="oid"
+                    select="com.tb.dao.TbShoplistDao.getShoplistByOid" />
+    </resultMap>
+    <select id="selectAllOrder" resultMap="adminOrder">
+        select o.*, a.address, a.recipient, a.recipient_phone
+        from tb_order o, tb_address a
+        where o.aid = a.aid
+    </select>
+    <!-- 根据订单id删除订单 -->
+    <delete id="deleteOrderByOid" parameterType="Integer">
+        delete from tb_order where oid = #{oid}
+    </delete>
+    <!-- 订单发货 -->
+    <update id="deliverOrder" parameterType="map">
+        update tb_order set status = #{status}, delivery_time = #{deliveryTime} where oid = #{oid}
+    </update>
+    <!-- 订单收货 -->
+    <update id="receivingOrder" parameterType="map">
+        update tb_order set status = #{status}, receiving_time = #{receivingTime} where oid = #{oid}
+    </update>
+</mapper>

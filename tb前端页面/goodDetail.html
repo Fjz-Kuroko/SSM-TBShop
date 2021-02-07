@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--    导入boot四个文件，导入顺序固定-->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/goodDetail.css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- Qs库，处理axios的post请求带参数问题 -->
+    <script src="https://cdn.bootcss.com/qs/6.7.0/qs.min.js"></script>
+    <script src="js/public.js"></script>
+</head>
+<body>
+<header>
+    <iframe class="my_header" src="public/head.html" scrolling="no"></iframe>
+</header>
+
+<div class="container" id="app">
+    <!--    上层区域-->
+    <div class="row no-gutters border mt-2 ">
+        <div class="col-lg-5">
+            <!--        商品图片-->
+            <div class="m-3">
+                <img :src="goodDetail.imgM" alt="" style="height: 440px; width: 440px">
+            </div>
+        </div>
+        <div class="col-lg-5 offset-1 mr-4 mt-2">
+            <!--        商品购买选项-->
+            <div class="m-4">
+                <!--                商品信息-->
+                <div>
+                    <!--            商品名字-->
+                    <div class="row no-gutters mb-3">
+                        <span style="font-size: 25px">{{goodDetail.pname}}</span>
+                    </div>
+                    <!--            商品价格-->
+                    <div class="row no-gutters mb-3 ml-3">
+                        <span class="text-muted my_small mt-auto mb-auto font-weight-lighter">价格：</span>
+                        <span style="color: red; font-size: 25px" class="font-weight-bold">￥{{goodDetail.price}}</span>
+                    </div>
+                    <!--                    促销-->
+                    <div class="row no-gutters mb-3 ml-3">
+                        <span class="font-weight-lighter text-muted my_small">促销：</span>
+                        <div class="row no-gutters">
+                            <p class="pl-2 pr-2 rounded my_small" style="background-color: red; color: white">满减</p>
+                            <span class="font-weight-lighter text-muted my_small">&nbsp;现在购买满100元即可减20元</span>
+                        </div>
+                        <div class="row no-gutters" style="margin-left: 2.40rem">
+                            <p class="pl-2 pr-2 rounded my_small" style="background-color: red; color: white">多买多省</p>
+                            <span class="font-weight-lighter text-muted my_small">&nbsp;买2件打8折，买4件打7折</span>
+                        </div>
+                    </div>
+                    <!--                    配送区域-->
+                    <div class="row no-gutters mb-3 ml-3">
+                        <span class="font-weight-lighter text-muted my_small">配送：全国可送&nbsp;&nbsp;快递：免运费，新疆西藏除外</span>
+                    </div>
+                    <!--                    服务-->
+                    <div class="row no-gutters mb-3 ml-3">
+                        <span class="font-weight-lighter text-muted my_small">服务：</span>
+                        <p class="pl-2 pr-2 rounded my_small" style="background-color: red; color: white">退</p>
+                        <span class="font-weight-lighter text-muted my_small">&nbsp;7天包退</span>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <p class="pl-2 pr-2 rounded my_small" style="background-color: red; color: white">修</p>
+                        <span class="font-weight-lighter text-muted my_small">&nbsp;30天保修</span>
+                    </div>
+                </div>
+
+
+                <!--            数量-->
+                <div class="mb-3 ml-3">
+                    <span class="font-weight-lighter text-muted my_small">数量：</span>
+                    <template>
+                        <el-input-number
+                                v-model="num"
+                                @change="handleChange"
+                                :min="1" :max="999"
+                                label="商品个数"
+                                size="small">
+                        </el-input-number>
+                    </template>
+                </div>
+                <!--            购买/加入购物车-->
+                <div class="mb-3 ml-3">
+                    <button @click="addCart" type="button" class="btn btn-outline-danger rounded-0" style="width: 160px">
+                        <img  class="text-center" style="margin-bottom: 0.2rem" src="img/test/shop_car.png" alt="">
+                        加入购物车
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    商品详情-->
+    <div class="mt-4 border text-center" >
+        <img :src="goodDetail.imgB" alt="" style="width: 800px; height: auto">
+    </div>
+</div>
+
+<footer>
+    <iframe src="public/foot.html" scrolling="no" class="my_footer"></iframe>
+</footer>
+</body>
+<script>
+    // 引入自定义baseUrl
+    var baseUrl = getBaseUrl();
+    // 意思是携带cookie信息,保持session的一致性
+    axios.defaults.withCredentials = true;
+    // 引入QS库
+    var qs = Qs;
+    var app = new Vue({
+        el: '#app',
+        data: {
+            uid: '',
+            num: 1,
+            pid: '',
+            goodDetail: {}
+        },
+        created () {
+          this.getPid();
+          this.getDetail();
+          this.getUid();
+        },
+        methods: {
+            getUid(){
+                this.uid = this.getCookie('uid');
+            },
+            getCookie(name){
+                var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+                if(arr != null) return unescape(arr[2]); return null;
+            },
+            isLogin() {
+                let that = this;
+                var getUid = this.getCookie('uid');
+                // console.log(getUid);
+                if (getUid == null || getUid == '') {
+                    that.$alert('您暂时还没有登录，请先登录', {
+                        confirmButtonText: '确定',
+                        callback: action => {
+                            window.location.href = 'login.html'
+                        }
+                    })
+                    return false;
+                }
+            },
+            getDetail () {
+                var that = this;
+                axios({
+                    method:'post',
+                    url: baseUrl + '/product/detail',
+                    transformRequest: [
+                        function (data) {
+                            return qs.stringify(data);
+                        }
+                    ],
+                    data: {
+                        pid: that.pid,
+                    }
+                }).then(function(response) {
+                    if (response.data.status == 1){
+                        that.goodDetail = response.data.data;
+                    }else{
+                        this.$alert(response.data.msg,{
+                            confirmButtonText: '确定'
+                        });
+                    }
+                    // console.log(response);
+                }, function (err) {
+                    console.log(err);
+                })
+            },
+            getPid () {
+                var url = decodeURI(window.location.href);
+                var mypid = url.split("?pid=")[1];
+                console.log(mypid);
+                //判断有无pid参数
+                if (!mypid || mypid == '') {
+                    this.$alert('商品不存在！', {
+                        confirmButtonText: '确定',
+                        callback: action => {
+                            window.location.href = 'index.html'
+                        }
+                    })
+                } else {
+                    this.pid = mypid;
+                    // this.isLogin();
+                }
+            },
+            addCart () {
+                if(this.isLogin() == false){
+                    return;
+                }
+                var that = this;
+                axios({
+                    method:'post',
+                    url: baseUrl + '/cart/addCart',
+                    transformRequest: [
+                        function (data) {
+                            return qs.stringify(data);
+                        }
+                    ],
+                    data: {
+                        uid: that.uid,
+                        pid: that.pid,
+                        num: that.num
+                    }
+                }).then(function(response) {
+                    if (response.data.status == 1){
+                        // alert('添加购物车成功!');
+                        that.addCartNotification();
+                    }else{
+                        // alert(response.data.msg);
+                        that.$alert(response.data.msg,{
+                            confirmButtonText: '确定'
+                        });
+                    }
+                    // console.log(response);
+                }, function (err) {
+                    console.log(err);
+                })
+            },
+            addCartNotification () {
+                this.$notify({
+                    title: '提示',
+                    message: '添加购物车成功,点击购物车可前往结算'
+                })
+            },
+            handleChange(value) {
+
+            }
+        }
+    })
+</script>
+</html>

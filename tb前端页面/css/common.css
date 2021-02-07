@@ -1,0 +1,27 @@
+/*container=>width:1100px*/
+.my_small{
+    font-size: 0.8rem;
+}
+
+*{margin:0;padding:0;}
+.my_header,.my_footer{
+    display: block;
+    width: 100%;
+    border: 0;
+}
+@media (min-width:455px) {
+    .my_header{height: 21rem;}
+    .my_footer{height: 23rem;}
+}
+
+@media (min-width:524px) {
+    .my_header{height: 16.25rem;}
+    .my_footer{height: 23rem;}
+}
+@media (min-width:970px) {
+    .my_header{height: 11rem;}
+    .my_footer{height: 23rem;}
+}
+
+
+

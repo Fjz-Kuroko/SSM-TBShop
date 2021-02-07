@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：该mapper.xml映射文件的唯一标识 -->
+<mapper namespace="com.tb.dao.TbShoplistDao">
+    <insert id="addShoplist" parameterType="java.util.List">
+        insert into tb_shoplist (oid, pid, uid, pnum) values
+        <foreach collection="list" item="shoplist" index="index" separator=",">
+            (#{shoplist.oid}, #{shoplist.pid}, #{shoplist.uid}, #{shoplist.pnum})
+        </foreach>
+    </insert>
+
+    <!-- 根据订单id查询 -->
+    <select id="getShoplistByOid" parameterType="Integer" resultType="com.tb.vo.ViewShoplist">
+        select s.*, p.pname, p.price, p.img_s, p.price*s.pnum as summary
+        from tb_product p, tb_shoplist s
+        where  s.oid = #{oid} and s.pid = p.pid
+    </select>
+    <!-- 根据订单id删除 -->
+    <delete id="deleteShoplistByOid" parameterType="Integer">
+        delete from tb_shoplist where oid = #{oid}
+    </delete>
+</mapper>

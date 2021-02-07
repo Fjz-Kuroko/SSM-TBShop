@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>text</title>
+
+    <!-- CSS -->
+    <link href="assets/css/fonts/fontawesome/all.min.css" rel="stylesheet">
+    <link href="assets/css/fonts/beid.css" rel="stylesheet">
+
+    <link href="assets/css/main.css" rel="stylesheet">
+    <link href="assets/css/styles.css" rel="stylesheet">
+
+    <!-- JQVMAP -->
+    <link href="assets/plugins/jqvmap/jqvmap.min.css" rel="stylesheet">
+
+    <!-- dateRangePicker -->
+    <link href="assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+    <link rel="icon" href="assets/img/favicon.png">
+
+    <!-- Fonts -->
+    <link href="assets/fonts/inter/inter.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+<--    <script src="http://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>-->
+    <!--    <script src="http://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>-->
+    <!--    <![endif]&ndash;&gt;-->
+</head>
+<body class="body">
+<!-- header -->
+
+<!-- header -->
+<header class="main-header">
+    <!-- nav -->
+    <nav class="main-navbar navbar navbar-expand-lg navbar-light shadow-2">
+        <div class="lnav-box d-flex">
+            <div class="logo-wrapper px-3 d-none d-md-flex">
+                <img src="assets/img/logo.png" alt="Logo">
+            </div>
+            <div class="sidebar-toggler-wrapper ml-auto">
+                <button class="p-collapsing-sidebar-toggler sidebar-toggler-secondary transition rounded-circle" data-collapsing="partially" data-collapsing-target="#adminNav" type="button">
+                    <span class="icon-menu-options"></span>
+                </button>
+            </div>
+        </div>
+        <div class="pr-6">
+            <ul class="nav sec-nav navbar-nav flex-row">
+                <li class="userTH-item nav-item dropdown">
+                    <a class="userTH-link nav-link d-inline-flex align-items-center h-100 small-1 pl-2 pl-md-3" href="#" id="dropdownAdmin_01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon-options lead-2"></span></a>
+                    <div class="dropdown-menu dropdown-menu-right shadow-1 py-3 position-absolute mt-1" aria-labelledby="dropdownAdmin">
+                        <a class="dropdown-item" href="#">返回顶部</a>
+                        <a class="dropdown-item" href="#">切换模式</a>
+                        <a class="dropdown-item" href="#">退出</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- /.nav -->
+</header>
+<!-- /.header -->
+
+<!-- main -->
+<div id="main">
+    <div id="adminNav" class="main-sidebar p-collapsing-sidebar sidebar-fixed sidebar-left d-flex flex-column">
+        <div class="main-sidebar-inner" data-scrollbar="sidebar">
+            <div class=" sidebar-nav sidebar-nav-light-hover list-unstyled text-unset small-3 fw-600 content-list flex-column">
+                <div class="nav-item text-light transition active">
+                    <div href="" aria-expanded="false" data-toggle="collapse" class="sbr-collapse nav-link nav-link-border collapsed collapser collapser-active">
+                        <i class="fas fa-sticky-note"></i> <span class="p-collapsing-title">商品管理</span>
+                    </div>
+                    <div class="collapse nav-collapse collapse show">
+                        <div class="list-unstyled">
+                            <div class="nav-item" v-on:click="showActive(0)">
+                                <a  class="p-collapsing-title nav-link">
+                                    <span>所有商品</span>
+                                </a>
+                            </div>
+                            <div class="nav-item" v-on:click="showActive(1)">
+                                <a class="p-collapsing-title nav-link">
+                                    <span>添加商品</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-item text-light transition">
+                    <div href="" aria-expanded="false" data-toggle="collapse" class="sbr-collapse nav-link nav-link-border collapsed collapser collapser-active">
+                        <i class="fas fa-desktop"></i> <span class="p-collapsing-title">订单管理</span>
+                    </div>
+                    <div class="collapse nav-collapse collapse show">
+                        <div class="list-unstyled">
+                            <div class="nav-item" v-on:click="showActive(2)">
+                                <a class="p-collapsing-title nav-link">
+                                    <span>所有订单</span>
+                                </a>
+                            </div>
+                            <div class="nav-item" v-on:click="showActive(3)">
+                                <a class="p-collapsing-title nav-link">
+                                    <span>未处理订单</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-item text-light transition">
+                    <div href="" aria-expanded="false" data-toggle="collapse" class="sbr-collapse nav-link nav-link-border collapsed collapser collapser-active">
+                        <i class="fas fa-chart-bar"></i> <span class="p-collapsing-title">设置</span>
+                    </div>
+                    <div class="collapse nav-collapse collapse show">
+                        <div class="list-unstyled">
+                            <div class="nav-item"v-on:click="showActive(4)">
+                                <a  class="p-collapsing-title nav-link">
+                                    <span>账户设置</span>
+                                </a>
+                            </div>
+                            <div class="nav-item" v-on:click="showActive(5)">
+                                <a class="p-collapsing-title nav-link">
+                                    <span>其他</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-container pl-3" style="word-break:break-all;word-wrap: break-word">
+        <div class="tab-pane fade show active" v-show="isActive[0]">
+            <div class="panel">
+                <div class="panel-header align-items-center">
+                    <div>
+                        <h5 class="title mb-0">所有商品</h5>
+                    </div>
+                    <div class="panel-header-nav ml-auto">
+                        <div>
+                            <form class="input-light h-100">
+                                <div class="input-group h-100">
+                                    <div class="input-group-prepend border-0 input-group-prepend">
+                                        <span class="input-group-text lead-1 pl-4"><span class="icon-search"></span></span>
+                                    </div>
+                                    <input type="text" placeholder="搜索" aria-label="Search" class="form-control form-control-lg h-100">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse show">
+                    <div class="panel-body pr-0">
+                        <table class="table mb-0 table-striped table-bordered table-hover dataTables-example" >
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>名称</th>
+                                <th>分类</th>
+                                <th>单价</th>
+                                <th>数量</th>
+                                <th>照片展示</th>
+                                <th>描述</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(item) in arr">
+                                <td>{{item.pid}}</td>
+                                <td>{{item.pname}}</td>
+                                <td>{{item.pclass}}</td>
+                                <td>{{item.price}}</td>
+                                <td>{{item.saleNum}}</td>
+                                <td>{{item.imgS}}</td>
+                                <td>{{item.description}}</td>
+                                <td><input class="btn btn-theme d-flex align-items-center btn-sm" type="button" value="修改" v-on:click="modifyCommodity(item.pid)"></td>
+                                <td><input class="btn btn-outline-primary d-flex align-items-center btn-sm" type="button" value="删除" v-on:click="delectCommodity(item.pid)"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade show active" v-show="isActive[1]">
+            <div>
+                <div>
+                    <h5 class="title mb-0">添加商品</h5>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label >id</label>
+                        <input type="text" v-model="commodity[0]" class="form-control">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>商品分类</label>
+                        <input type="text" class="form-control" v-model="commodity[1]">
+
+                        </input>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>商品名称</label>
+                        <input type="text" class="form-control" v-model="commodity[2]">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>商品描述</label>
+                    <textarea class="form-control" rows="3" v-model="commodity[3]"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>商品价格</label>
+                        <input type="text" class="form-control" v-model="commodity[4]">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>商品数量</label>
+                        <input type="text" class="form-control" v-model="commodity[5]">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label>商品大图</label>
+                        <input type="text" class="form-control" v-model="commodity[6]">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label>商品中图</label>
+                        <input type="text" class="form-control" v-model="commodity[7]">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>商品小图</label>
+                        <input type="text" class="form-control" v-model="commodity[8]">
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" @click="send">提交</button>
+
+            </div>
+        </div>
+        <div class="tab-pane fade show active" v-show="isActive[3]">
+            <div>
+                <h5 class="title mb-0">待处理订单</h5>
+            </div>
+            <div class="collapse show">
+                <table class="table mb-0 table-striped table-bordered table-hover dataTables-example text-center"  style="word-break:break-all;word-wrap: break-word" >
+                    <thead>
+                    <tr>
+                        <th >订单ID</th>
+                        <th>接收人</th>
+                        <th>手机号</th>
+                        <th>地址</th>
+                        <th>下单时间</th>
+                        <th>付款金额</th>
+                        <th>商品</th>
+                        <th>状态</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="it in order" v-if="it.assign=='已付款'">
+                        <th>{{it.oid}}</th>
+                        <th>{{it.recipient}}</th>
+                        <th>{{it.recipientPhone}}</th>
+                        <th>{{it.address}}</th>
+                        <th>{{it.orderTime}}</th>
+                        <th>{{it.orderAmount}}</th>
+                        <th>
+                            <table>
+                                <tr>
+                                    <th>名称</th>
+                                    <th>id</th>
+                                    <th>单价</th>
+                                    <th>数量</th>
+                                    <th>总价</th>
+                                </tr>
+                                <tr v-for="i in it.shoplists">
+                                    <th>{{i.pname}}</th>
+                                    <th>{{i.pid}}</th>
+                                    <th>{{i.price}}</th>
+                                    <th>{{i.pnum}}</th>
+                                    <th>{{i.summary}}</th>
+                                </tr>
+                            </table>
+                        </th>
+                        <th><input type="button" value="发货" class="btn-sm btn btn-theme d-flex align-items-center" v-on:click="fahuo(it.oid)"></th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade show active" v-show="isActive[2]">
+            <div>
+                <h5 class="title mb-0">所有订单</h5>
+            </div>
+            <div class="collapse show">
+                <table class="table mb-0 table-striped table-bordered table-hover dataTables-example text-center"  style="word-break:break-all;word-wrap: break-word" >
+                    <thead>
+                    <tr>
+                        <th >订单ID</th>
+                        <th>接收人</th>
+                        <th>手机号</th>
+                        <th>地址</th>
+                        <th>下单时间</th>
+                        <th>付款金额</th>
+                        <th>商品</th>
+                        <th>状态</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="it in order">
+                        <th>{{it.oid}}</th>
+                        <th>{{it.recipient}}</th>
+                        <th>{{it.recipientPhone}}</th>
+                        <th>{{it.address}}</th>
+                        <th>{{it.orderTime}}</th>
+                        <th>{{it.orderAmount}}</th>
+                        <th>
+                            <table>
+                                <tr>
+                                    <th>名称</th>
+                                    <th>id</th>
+                                    <th>单价</th>
+                                    <th>数量</th>
+                                    <th>总价</th>
+                                </tr>
+                                <tr v-for="i in it.shoplists">
+                                    <th>{{i.pname}}</th>
+                                    <th>{{i.pid}}</th>
+                                    <th>{{i.price}}</th>
+                                    <th>{{i.pnum}}</th>
+                                    <th>{{i.summary}}</th>
+                                </tr>
+                            </table>
+                        </th>
+                        <th v-if="(it.status!='已付款')">{{it.status}}</th>
+                        <th v-else><input type="button" value="发货" class="btn-sm btn btn-theme d-flex align-items-center" v-on:click="fahuo(it.oid)"></th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade show active" v-show="isActive[4]">
+            <div>
+                <h5 class="title mb-0">账户设置</h5>
+            </div>
+            <input type="button" value="退出登录" class="btn btn-theme d-flex align-items-center btn-lg" v-on:click="logout">
+        </div>
+        <div class="tab-pane fade show active" v-show="isActive[5]">
+            <div>
+                <h5 class="title mb-0">其他</h5>
+            </div>
+        </div>
+        <div class="tab-pane fade show active" v-show="isActive[6]">
+            <div>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label >id</label>
+                        <input type="text" v-model="commodity2[0]" class="form-control">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>商品分类</label>
+                        <input type="text" class="form-control" v-model="commodity2[1]">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>商品名称</label>
+                        <input type="text" class="form-control" v-model="commodity2[2]">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>商品描述</label>
+                    <textarea class="form-control" rows="3" v-model="commodity2[3]"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>商品价格</label>
+                        <input type="text" class="form-control" v-model="commodity2[4]">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>商品数量</label>
+                        <input type="text" class="form-control" v-model="commodity2[5]">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label>商品大图</label>
+                        <input type="text" class="form-control" v-model="commodity2[6]">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label>商品中图</label>
+                        <input type="text" class="form-control" v-model="commodity2[7]">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>商品小图</label>
+                        <input type="text" class="form-control" v-model="commodity2[8]">
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" @click="send2">提交</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /.main -->
+
+
+<!-- offcanvas - search -->
+<div id="offcanvas-search" class="offcanvas h-100 py-8" data-animation="fadeDown" data-scrollbar="offcanvas">
+    <div class="row">
+        <div class="col-sm-1 order-sm-last">
+            <button type="button" data-toggle="offcanvas-close" class="close float-right mr-lg-6 text-light o-1 lead-2 fw-100" data-dismiss="offcanvas" aria-label="Close">
+                <span aria-hidden="true" class="icon-close"></span>
+            </button>
+        </div>
+        <form class="col-sm-11 col-lg-10 mx-auto input-rounded form-inline position-relative w-100 mt-0">
+            <div class="input-group bg-none border-0 w-100">
+                <input class="form-control form-control-lg rounded-0 bg-none pl-0 h-auto fs-6 display-md-4 display-xl-2 fw-600" type="text" aria-label="Search" placeholder="Search for...">
+            </div>
+            <hr class="w-100 o-25 border-white mt-0">
+            <div class="row gutters-y w-100">
+                <div class="col-lg-3">
+                    <h5 class="text-uppercase text-light mb-6"><i class="fas fa-long-arrow-alt-right"></i> Categories</h5>
+                    <ul class="list-unstyled pl-4">
+                        <li class="mb-4">
+                            <a href="#" class="tag-item"><strong>Architecture</strong> (800)</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="#" class="tag-item"><strong>Art & Illustration</strong> (317)</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="#" class="tag-item"><strong>Business & Corporate</strong> (419)</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="#" class="tag-item"><strong>Culture & Education</strong> (672)</a>
+                        </li>
+                        <li class="mb-0">
+                            <a href="#" class="tag-item"><strong>E-Commerce</strong> (272)</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h5 class="text-uppercase text-light mb-6"><i class="fas fa-long-arrow-alt-right"></i> Tags</h5>
+                    <ul class="list-unstyled pl-4">
+                        <li class="mb-4">
+                            <a href="#" class="tag-item"><strong>360</strong> (128)</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="#" class="tag-item"><strong>3D</strong> (42)</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="#" class="tag-item"><strong>Animation</strong> (4105)</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="#" class="tag-item"><strong>Apps</strong> (319)</a>
+                        </li>
+                        <li class="mb-0">
+                            <a href="#" class="tag-item"><strong>Apps</strong> (319)</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h5 class="text-uppercase text-light mb-6"><i class="fas fa-long-arrow-alt-right"></i> Technologies</h5>
+                    <ul class="list-unstyled pl-4">
+                        <li class="mb-4">
+                            <a href="#" class="tag-item"><strong>AngularJS</strong> (629)</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="#" class="tag-item"><strong>Apache</strong> (241)</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="#" class="tag-item"><strong>Bootstrap</strong> (751)</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="#" class="tag-item"><strong>CloudFire</strong> (209)</a>
+                        </li>
+                        <li class="mb-0">
+                            <a href="#" class="tag-item"><strong>CloudFire</strong> (107)</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h5 class="text-uppercase text-light mb-6"><i class="fas fa-long-arrow-alt-right"></i> Countries</h5>
+                    <ul class="list-unstyled pl-4">
+                        <li class="mb-4">
+                            <a href="#" class="tag-item"><strong>United States</strong> (1605)</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="#" class="tag-item"><strong>France</strong> (569)</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="#" class="tag-item"><strong>Business & Corporate</strong> (419)</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="#" class="tag-item"><strong>United Kingdom</strong> (672)</a>
+                        </li>
+                        <li class="mb-0">
+                            <a href="#" class="tag-item"><strong>Italy</strong> (484)</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- /.offcanvas - search -->
+
+<!-- preloader -->
+<div class="preloaderWrapper"></div>
+
+<!-- jQuery -->
+<script src="assets/js/jquery.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="assets/js/bootstrap.min.js"></script>
+
+<!-- Chart.js -->
+<script src="assets/plugins/chart/Chart.min.js" id="_chartJS_min"></script>
+<script src="assets/plugins/chart/Chart.bundle.min.js"></script>
+<script src="assets/plugins/chart/chartjs-plugin-annotation.js"></script>
+<script src="assets/plugins/chart/chartjs-plugin-labels.js"></script>
+
+<!-- apexcharts -->
+<script src="assets/plugins/apexcharts/apexcharts.min.js"></script>
+
+<!-- Moment -->
+<script src="assets/plugins/lib/moment/moment.min.js"></script>
+
+<!-- User JS -->
+<script src="assets/js/scripts.js"></script>
+
+<!-- Main JS -->
+<script src="assets/js/main.js" id="_mainJS" data-plugins="load"></script>
+
+<!-- Modules -->
+<script src="assets/js/modules.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!--<script src="vue/vue.js"></script>-->
+<!--官网提供的axios在线地址-->
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.0/axios.min.js"></script>
+<!-- Qs库，处理axios的post请求带参数问题 -->
+<script src="https://cdn.bootcss.com/qs/6.7.0/qs.min.js"></script>
+<script src="./assets/js/index.js"></script>
+<script src="./assets/js/public.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--    导入boot四个文件，导入顺序固定-->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/personCenter.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- Qs库，处理axios的post请求带参数问题 -->
+    <script src="https://cdn.bootcss.com/qs/6.7.0/qs.min.js"></script>
+    <script src="js/public.js"></script>
+    <style>
+        .el-table tbody tr:hover > td {
+            background-color: white !important;
+        }
+
+        /*隐藏折叠面板表头的右键头*/
+        .el-collapse .el-collapse-item i {
+            visibility: hidden;
+        }
+
+    </style>
+    <script>
+        Vue.component('order-item', {
+            props: ['tabledata'],
+            methods: {
+                arraySpanMethod({row, column, rowIndex, columnIndex}) {
+                    if (columnIndex === 4 || columnIndex === 5) {
+                        if (rowIndex === 0) {
+                            return {
+                                rowspan: 4,
+                                colspan: 1
+                            };
+                        }
+                    }
+                },
+                payOrder(oid) {
+                    window.location.href = 'fillOrder.html?oid=' + oid;
+                },
+                pageRefresh(){
+                    location.reload();
+                },
+                receiveGoods(oid){
+                    let that = this;
+
+                    axios({
+                        method: 'post',
+                        url: baseUrl + '/order/receivingOrder',
+                        transformRequest: [
+                            function (data) {
+                                return qs.stringify(data);
+                            }
+                        ],
+                        data: {
+                            oid: oid,
+                        }
+                    }).then(function (response) {
+                        // console.log(response);
+                        if (response.data.status == '1') {
+                            alert('收货成功!');
+                            that.pageRefresh();
+                        } else {
+                            alert(response.data.msg);
+                        }
+                    }, function (err) {
+                        console.log(err);
+                    })
+                }
+
+            },
+            template: '\
+            <div class="mb-3">\
+                            <div class="bg_gray" style="height: 30px;">\
+                                <span class="my_small my_pure_muted ml-3">订单号:&nbsp;</span>\
+                                <span class="my_small my_pure_muted">{{tabledata.oid}}</span>\
+                            </div>\
+                            <div>\
+                                <el-table\
+                                        :data="tabledata.shoplists"\
+                                        style="width: 100%"\
+                                        size="mini"\
+                                        border\
+                                        :show-header="false"\
+                                        :span-method="arraySpanMethod"\
+                                >\
+                                    <el-table-column\
+                                            prop="img"\
+                                            label="图片"\
+                                            align="center"\
+                                            width="120">\
+                                        <div slot-scope="scope">\
+                                            <el-image\
+                                                    style="width: 80px; height: 80px"\
+                                                    :src="scope.row.imgS"\
+                                                    fit="fit"></el-image>\
+                                        </div>\
+                                    </el-table-column>\
+                                    <el-table-column\
+                                            prop="pname"\
+                                            label="商品名称"\
+                                            align="center">\
+                                    </el-table-column>\
+                                    <el-table-column\
+                                            prop="price"\
+                                            label="价格"\
+                                            align="center"\
+                                            width="80">\
+                                        <div slot-scope="scope">\
+                                            <span class="my_pure_muted">￥{{scope.row.price}}</span>\
+                                        </div>\
+                                    </el-table-column>\
+                                    <el-table-column\
+                                            prop="pnum"\
+                                            label="数量"\
+                                            align="center"\
+                                            width="80">\
+                                    </el-table-column>\
+                                    <el-table-column\
+                                            prop="summary"\
+                                            label="总价"\
+                                            align="center"\
+                                            width="80">\
+                                        <div slot-scope="scope">\
+                                            <span class="my_pure_muted">￥{{scope.row.summary}}</span>\
+                                        </div>\
+                                    </el-table-column>\
+                                    <el-table-column\
+                                            prop="status"\
+                                            label="订单状态"\
+                                            align="center"\
+                                            width="80">\
+                                            <div slot-scope="scope">\
+                                                <div v-if="tabledata.status == `未付款`">\
+                                                    <span class="my_muted" @click="payOrder(tabledata.oid)">{{tabledata.status}}</span>\
+                                                </div>\
+                                                <div v-if="tabledata.status == `已发货`">\
+                                                    <span class="my_muted" @click="receiveGoods(tabledata.oid)">{{tabledata.status}}</span>\
+                                                </div>\
+                                                <div v-else>\
+                                                    <span class="my_pure_muted">{{tabledata.status}}</span>\
+                                                </div>\
+                                            </div>\
+                                    </el-table-column>\
+                                </el-table>\
+                            </div>\
+                      </div>\
+            '
+        })
+
+    </script>
+</head>
+<body>
+<!--引入头部head.html-->
+<header>
+    <iframe src="public/head.html" scrolling="no" class="my_header"></iframe>
+</header>
+</div>
+<div class="container mt-2" id="app">
+    <div class="row no-gutters">
+        <!--        左侧选项卡导航-->
+        <div class="col-lg-3 col-md-12 mb-2">
+            <div class="m-auto">
+                <ul class="nav nav-tabs list-group justify-content-center" id="navTab">
+                    <li class="nav-item list-group-item p-0 mt-2 text-center" style="width: 170px"><a href="#tab1"
+                                                                                                      class="nav-link my_small my_muted"
+                                                                                                      data-toggle="tab">我的订单</a>
+                    </li>
+                    <li class="nav-item list-group-item p-0 mt-2 text-center" style="width: 170px"><a href="#tab2"
+                                                                                                      class="nav-link my_small my_muted"
+                                                                                                      data-toggle="tab">地址管理</a>
+                    </li>
+                    <li class="nav-item list-group-item p-0 mt-2 text-center" style="width: 170px"><a href="#tab3"
+                                                                                                      class="nav-link my_small my_muted"
+                                                                                                      data-toggle="tab">客服帮助</a>
+                    </li>
+                    <li class="nav-item list-group-item p-0 mt-2 text-center" style="width: 170px"><a href="#tab4"
+                                                                                                      class="nav-link my_small my_muted"
+                                                                                                      data-toggle="tab">常见问题</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--        右侧内容-->
+        <div class="col-lg-9 col-md-12 border">
+            <div class="tab-content">
+                <!--                    订单-->
+                <div id="tab1" class="tab-pane active">
+                    <div class="m-4">
+                        <order-item
+                                v-for="order in orderData"
+                                v-bind:key="order.oid"
+                                v-bind:tabledata="order">
+                        </order-item>
+                    </div>
+                </div>
+                <!--                地址管理-->
+                <div id="tab2" class="tab-pane">
+                    <div class="m-4">
+                        <!--                    已有地址-->
+                        <div class="text-left m-2">
+                            <!--                            循环生成地址-->
+                            <el-table
+                                    :data="addresslist"
+                                    border
+                                    lazy
+                                    empty-text="没有设置收件地址"
+                                    style="width: 100%"
+                                    :header-cell-style="{background:'#dcdfe6', color: 'black'}"
+                            >
+                                <el-table-column
+                                        prop="address"
+                                        label="收件地址">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="recipient"
+                                        label="收件人"
+                                        width="180">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="recipientPhone"
+                                        label="收件号码">
+                                </el-table-column>
+                                <el-table-column
+                                        label="操作">
+                                    <div slot-scope="scope">
+                                        <span class="my_muted" @click="editAddress(scope.row.aid)">编辑</span>
+                                        <span class="my_muted" @click="deleteAddress(scope.row.aid)">删除</span>
+                                    </div>
+                                </el-table-column>
+                            </el-table>
+                        </div>
+                        <!--                        添加新地址-->
+                        <div class="m-2">
+                            <el-collapse style="border: 0px">
+                                <el-collapse-item>
+                                    <template slot="title">
+                                        <el-button>新增收件地址</el-button>
+                                    </template>
+                                    <div class="border mt-3">
+                                        <div class="m-3">
+                                            <el-form :model="newaddressform" ref="newaddressform" label-width="80px"
+                                                     style="width: 330px" :rules="rules">
+                                                <el-form-item label="收件人" prop="recipient">
+                                                    <el-input v-model="newaddressform.recipient"
+                                                              placeholder="请输入收件人姓名"></el-input>
+                                                </el-form-item>
+                                                <el-form-item label="收件号码" prop="recipientPhone">
+                                                    <el-input v-model="newaddressform.recipientPhone"
+                                                              placeholder="请输入收件号码"></el-input>
+                                                </el-form-item>
+                                                <el-form-item label="收货地址" prop="address">
+                                                    <el-input
+                                                            type="textarea"
+                                                            v-model="newaddressform.address"
+                                                            :autosize="{ minRows: 3, maxRows: 4}"
+                                                            resize="none"
+                                                            placeholder="请输入详细收货地址"></el-input>
+                                                </el-form-item>
+                                                <el-form-item>
+                                                    <el-button
+                                                            type="primary"
+                                                            @click="addAddress('newaddressform')">
+                                                        新建收货地址
+                                                    </el-button>
+                                                </el-form-item>
+                                            </el-form>
+                                        </div>
+                                    </div>
+                                </el-collapse-item>
+                            </el-collapse>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab3" class="tab-pane">功能未上线
+                </div>
+                <div id="tab4" class="tab-pane">功能未上线
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    侧边弹出的抽屉，修改地址-->
+    <el-drawer
+            title="编辑地址"
+            :visible.sync="editdialog"
+            direction="ltr"
+            :before-close="handleClose"
+    >
+        <div>
+            <el-form :model="editaddressform" ref="editaddressform" label-width="80px"
+                     style="width: 330px" :rules="rules">
+                <el-form-item label="收件人" prop="recipient">
+                    <el-input v-model="editaddressform.recipient" placeholder="请输入收件人姓名"></el-input>
+                </el-form-item>
+                <el-form-item label="收件号码" prop="recipientPhone">
+                    <el-input v-model="editaddressform.recipientPhone"
+                              placeholder="请输入收件号码"></el-input>
+                </el-form-item>
+                <el-form-item label="收货地址" prop="address">
+                    <el-input
+                            type="textarea"
+                            v-model="editaddressform.address"
+                            :autosize="{ minRows: 3, maxRows: 4}"
+                            resize="none"
+                            placeholder="请输入详细收货地址"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button
+                            type="primary"
+                            @click="doEditAddress('editaddressform')">
+                        修改收货地址
+                    </el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+    </el-drawer>
+</div>
+
+
+<!--引入底部foot.html-->
+<footer>
+    <iframe src="public/foot.html" scrolling="no" class="my_footer"></iframe>
+</footer>
+</body>
+<script>
+    // 引入自定义baseUrl
+    var baseUrl = getBaseUrl();
+    // 意思是携带cookie信息,保持session的一致性
+    axios.defaults.withCredentials = true;
+    // 引入QS库
+    var qs = Qs;
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            //用户id
+            uid: '',
+            //新建收货地址的表单输入验证
+            rules: {
+                recipient: [
+                    {required: true, message: '请输入收件人姓名', trigger: 'blur'},
+                ],
+                recipientPhone: [
+                    {required: true, message: '请输入收件号码', trigger: 'blur'}
+                ],
+                address: [
+                    {required: true, message: '请输入收货地址', trigger: 'blur'}
+                ]
+            },
+            //存储新地址数据
+            newaddressform: {
+                address: '',
+                recipient: '',
+                recipientPhone: '',
+            },
+            //编辑地址的控制参数
+            editdialog: false,
+            editAid: -1,
+            editaddressform: {
+                address: '',
+                recipient: '',
+                recipientPhone: '',
+            },
+            //已有地址的单选框
+            check: 0,
+            //获取的地址
+            addresslist: [
+
+            ],
+            //获取的订单
+            orderData: [
+
+            ]
+
+        },
+        created() {
+            this.isLogin();
+        },
+        methods: {
+            getCookie(name){
+                var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+                if(arr != null) return unescape(arr[2]); return null;
+            },
+            isLogin() {
+                let that = this;
+                var getUid = this.getCookie('uid');
+                // console.log(getUid);
+                if (getUid == null || getUid == '') {
+                    that.$alert('您暂时还没有登录，请先登录', {
+                        confirmButtonText: '确定',
+                        callback: action => {
+                            window.location.href = 'login.html'
+                        }
+                    })
+                } else {
+                    that.uid = getUid;
+                    that.getOrderList();
+                    that.initaddress();
+                }
+            },
+            //支付未支付的订单
+            payOrder(oid) {
+                window.location.href = 'fillOrder.html?oid=' + oid;
+            },
+            //抽屉关闭时
+            handleClose() {
+                this.$confirm('退出将不会保存你的改动', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.editdialog = false
+                });
+            },
+            //发送修改地址的请求
+            doEditAddress(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        var that = this;
+                        axios({
+                            method: 'post',
+                            url: baseUrl + '/address/updateAddress',
+                            transformRequest: [
+                                function (data) {
+                                    return qs.stringify(data);
+                                }
+                            ],
+                            data: {
+                                aid:that.editAid,
+                                address: that.editaddressform.address,
+                                recipient: that.editaddressform.recipient,
+                                recipientPhone: that.editaddressform.recipientPhone
+                            }
+                        }).then(function (response) {
+                            // console.log(response);
+                            if (response.data.status == '1') {
+                                alert('编辑地址成功!');
+                                that.editdialog = false;
+                                that.initaddress();
+                            } else {
+                                alert(response.data.msg);
+                            }
+                        }, function (err) {
+                            console.log(err);
+                        })
+
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            //删除地址
+            deleteAddress(aid) {
+                // alert('delete' + aid);
+                var that = this;
+                axios({
+                    method: 'post',
+                    url: baseUrl + '/address/deleteAddressByAid',
+                    transformRequest: [
+                        function (data) {
+                            return qs.stringify(data);
+                        }
+                    ],
+                    data: {
+                        aid: aid,
+                    }
+                }).then(function (response) {
+                    // console.log(response);
+                    if (response.data.status == '1') {
+                        alert('删除地址成功');
+                        that.initaddress();
+                    } else {
+                        alert(response.data.msg);
+                    }
+                }, function (err) {
+                    console.log(err);
+                })
+            },
+            //打开抽屉
+            editAddress(aid) {
+                // alert('edit' + aid);
+                for (var i = 0; i < this.addresslist.length; i++) {
+                    if (this.addresslist[i].aid === aid) {
+                        this.editaddressform.address = this.addresslist[i].address;
+                        this.editaddressform.recipient = this.addresslist[i].recipient;
+                        this.editaddressform.recipientPhone = this.addresslist[i].recipientPhone;
+                    }
+                }
+                this.editAid = aid;
+                this.editdialog = true;
+            },
+            //新增地址
+            addAddress(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        var that = this;
+                        axios({
+                            method: 'post',
+                            url: baseUrl + '/address/addAddress',
+                            transformRequest: [
+                                function (data) {
+                                    return qs.stringify(data);
+                                }
+                            ],
+                            data: {
+                                uid: that.uid,
+                                address: that.newaddressform.address,
+                                recipient: that.newaddressform.recipient,
+                                recipientPhone: that.newaddressform.recipientPhone
+                            }
+                        }).then(function (response) {
+                            // console.log(response);
+                            if (response.data.status == '1') {
+                                alert('添加地址成功!');
+                                that.initaddress();
+                            } else {
+                                alert(response.data.msg);
+                            }
+                        }, function (err) {
+                            console.log(err);
+                        })
+
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            //初始化check以及地址数据
+            initaddress() {
+                var that = this;
+                axios({
+                    method: 'post',
+                    url: baseUrl + '/address/getAllAddressByUid',
+                    transformRequest: [
+                        function (data) {
+                            return qs.stringify(data);
+                        }
+                    ],
+                    data: {
+                        uid: that.uid,
+                    }
+                }).then(function (response) {
+                    that.addresslist = response.data.data;
+                }, function (err) {
+                    console.log(err);
+                })
+
+            },
+            //让表格某列多行成单行
+            arraySpanMethod({row, column, rowIndex, columnIndex}) {
+                if (columnIndex === 4 || columnIndex === 5) {
+                    if (rowIndex === 0) {
+                        return {
+                            rowspan: 4,
+                            colspan: 1
+                        };
+                    }
+                }
+            },
+            //获取订单数据
+            getOrderList: function () {
+                var that = this;
+                axios({
+                    method: 'post',
+                    url: 'http://10.252.76.125:8081/order/getOrdersByUid',
+                    transformRequest: [
+                        function (data) {
+                            return qs.stringify(data);
+                        }
+                    ],
+                    data: {
+                        uid: that.uid,
+                    }
+                }).then(function (response) {
+                    that.orderData = response.data.data;
+                    // console.log(response.data);
+                    // console.log(response);
+                }, function (err) {
+                    console.log(err);
+                })
+            }
+        }
+    })
+</script>
+</html>
